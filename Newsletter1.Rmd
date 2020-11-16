@@ -1,0 +1,285 @@
+---
+output: pdf_document
+fontsize: 12pt
+urlcolor: blue
+header-includes:
+ - \usepackage{booktabs}
+ - \usepackage{sectsty}
+ - \usepackage[utf8]{inputenc}
+ - \usepackage[T1]{fontenc}
+ - \usepackage{microtype}
+ - \usepackage{newspaper}
+ - \usepackage{graphicx}
+ - \usepackage{multicol}
+ - \usepackage{picinpar}
+ - \usepackage{hyperref} 
+---
+
+\date{November 16, 2020}
+\currentvolume{1}
+\currentissue{1}
+\SetPaperName{NBME us:eRs:}
+\SetHeaderName{NBME useRs}
+\SetPaperLocation{}
+\SetPaperSlogan{``there is art to data science''}
+\SetPaperPrice{PRICELESS}
+
+\maketitle
+
+\vspace{-1.5cm}
+
+\sectionfont{\centering}
+\vspace*{1em}
+# Welcome!
+
+Thank you all for your interest in learning more about R and joining the R community at NBME. I'm very excited to report that as of this writing that 46 people have signed up to be a part of the R useRs group^["useRs" is an R-specific stylization of [denoting a computer program user](https://en.wikipedia.org/wiki/User_(computing)). For example, [useR!](https://www.r-project.org/conferences/) is the international R users conference. Thus the use of `useRs' is not my cheesy idea, but I'm happy to adopt it.]. This first newsletter is written assuming that you have little or no experience with R. The vast majority of you (~75\%) indicated that you were a novice / new to R, so you are all in good company.
+
+\vspace{-.5cm}
+
+# About R ^[Taken verbatim from the [What is R?](https://www.r-project.org/about.html) page]
+
+\begin{center}
+\includegraphics[height=3cm]{rprogramming.png}
+\end{center}
+
+\vspace{-.5cm}
+
+## Introduction to R
+R is a language and environment for statistical computing and graphics. It is a GNU project which is similar to the S language and environment which was developed at Bell Laboratories (formerly AT&T, now Lucent Technologies) by John Chambers and colleagues. R can be considered as a different implementation of S. There are some important differences, but much code written for S runs unaltered under R.
+
+R provides a wide variety of statistical (linear and nonlinear modelling, classical statistical tests, time-series analysis, classification, clustering, …) and graphical techniques, and is highly extensible. The S language is often the vehicle of choice for research in statistical methodology, and R provides an Open Source route to participation in that activity.
+
+One of R’s strengths is the ease with which well-designed publication-quality plots can be produced, including mathematical symbols and formulae where needed. Great care has been taken over the defaults for the minor design choices in graphics, but the user retains full control.
+
+R is available as Free Software under the terms of the Free Software Foundation’s GNU General Public License in source code form. It compiles and runs on a wide variety of UNIX platforms and similar systems (including FreeBSD and Linux), Windows and MacOS.
+
+\newpage
+
+\vspace*{-1cm}
+
+## The R environment
+R is an integrated suite of software facilities for data manipulation, calculation and graphical display. It includes:
+
+\begin{itemize}
+\item an effective data handling and storage facility,
+\item a suite of operators for calculations on arrays, in particular matrices,
+\item a large, coherent, integrated collection of intermediate tools for data analysis,
+\item graphical facilities for data analysis and display either on-screen or on hardcopy, and
+\item a well-developed, simple and effective programming language which includes conditionals, loops, user-defined recursive functions and input and output facilities.
+\end{itemize}
+
+The term “environment” is intended to characterize it as a fully planned and coherent system, rather than an incremental accretion of very specific and inflexible tools, as is frequently the case with other data analysis software.
+
+R, like S, is designed around a true computer language, and it allows users to add additional functionality by defining new functions. Much of the system is itself written in the R dialect of S, which makes it easy for users to follow the algorithmic choices made. For computationally-intensive tasks, C, C++ and Fortran code can be linked and called at run time. Advanced users can write C code to manipulate R objects directly.
+
+Many users think of R as a statistics system. We prefer to think of it as an environment within which statistical techniques are implemented. R can be extended (easily) via packages. There are about eight packages supplied with the R distribution and many more are available through the CRAN family of Internet sites covering a very wide range of modern statistics.
+
+R has its own LaTeX-like documentation format, which is used to supply comprehensive documentation, both on-line in a number of formats and in hardcopy.
+
+\vspace{1.5cm}
+\hrule
+\vspace{1cm}
+
+That was a lot, but it is negligent to not give this introduction when first learning about R, and I cannot state this information better or more succinctly than the creators of R themselves. Admittedly some the terminology / jargon in this introduction warrants unpacking, and this will come in due time. Now on with the fun!
+
+\newpage
+
+\vspace*{-1cm}
+
+# Installing R
+
+To use R, one must first install the R software. One can download the appropriate version of R (Windows / Mac / Linux) from the [Cromprehensive R Archive Network](https://cran.r-project.org/). For those with previous R experience it is worth noting [there were some substantial changes made when R transitioned from the 3.x to 4.x version](https://blog.revolutionanalytics.com/2020/04/r-400-is-released.html).
+
+Once you have downloaded R, you will naturally be interested to see what it's like to use the software. You'll be confronted with a screen similar to this (your version of R may vary from mine):
+
+![Uninformative R GUI](BasicRScreen.JPG)
+
+This is the basic R console, where one can enter syntax and execute a variety of R arguments. However, for those of you with SPSS or SAS experience, this interface may seem difficult. There's not much to it, and once you've typed a command and run it, it's not always clear what happened. For instance, you can see I've entered a variety of commands and there doesn't seem to be any additional information available.
+
+For these reasons (and more), several developers got together years ago and decided to create an interface to make the R workflow experience more user-friendly and efficient. And thus was born [RStudio](https://rstudio.com/).
+
+\newpage
+
+\vspace*{-1cm}
+
+# Installing RStudio
+
+I believe that RStudio is one of the main reasons that R has become so popular in the last decade. In addition to creating the user-friendly [integrated development environment](https://en.wikipedia.org/wiki/Integrated_development_environment) (IDE), RStudio  employs some of the most prolific state-of-the-art developers and R useRs (including my personal hero, [Hadley Wickham](http://hadley.nz/)). The RStudio group continues to push the boundaries of what R can do by developing unique packages that facilitate workflows and far extend R's capabilities. Much of what you will learn and use can probably be traced back to some of these RStudio individuals.
+
+[You can navigate to the RStudio installation page by clicking on this sentence](https://rstudio.com/products/rstudio/download/). In the vast majority of cases, the Free version of RStudio Desktop will be more than sufficient. RStudio will automatically detect any version of R that is installed, so you can just open RStudio when starting to work.
+
+\vspace{.5cm}
+
+![Informative R IDE](BasicRStudioScreen.JPG)
+
+\vspace{.25cm}
+
+This is the basic RStudio interface, which is only a small part of what RStudio can do. I would like to point out the top left corner, which is the syntax window where we have defined the same objects that we saw above in the regular R interface. The lower left corner is the console, which replicates what you saw on the page above. When you run syntax in the top left script window, those commands are mirrored in the console. One can also run commands directly in the console, but this leaves no record of what commands have been run. This can be helpful in some specific instances, but for most purposes you'll want to use the top left window. The top right window displays the local environment and shows you how specific variables have been defined. The bottom right window displays the objects saved in the working directory. Fully going through RStudio warrants several newsletters or a workshop, which we will happily provide in the future.
+
+\newpage
+
+\vspace*{-1cm}
+
+# Learning Resources
+
+The number of resources available online grows every day. This isn't an exaggeration - there are many blogs, forums, and message boards for R users with active participation. I'll arbitrarily break these resources up into online books, online courses, and websites/blogs of interest. I want to thank \textbf{Angelo D'Addario}, \textbf{Drew Houriet}, and \textbf{Matt Roumaya} for helping me expand these sections.
+
+## Online Books
+
+A [cursory search on Amazon](https://www.amazon.com/s?k=R+Programming&ref=nb_sb_noss_2) shows several books available for learning R / R reference. I've looked through many of these books and think a couple are pretty decent, but there are several \textit{\textbf{free}} books online that are just as good.
+
+[\textbf{Bookdown.org}](https://bookdown.org/) is one such place to find high-quality free books. These are all books created using the [`bookdown`](https://github.com/rstudio/bookdown) R package and are freely available. My favorite reference / help book here is [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund. Another good starter is [R Programming for Data Science](https://bookdown.org/rdpeng/rprogdatascience/) by [Roger Peng](http://www.biostat.jhsph.edu/~rpeng/), who also has a great Coursera course available (see below). I encourage you to look through all of the titles to get a sense of the free resources available to you as you continue to learn.
+
+\vspace{1cm}
+
+\begin{center}
+\includegraphics[]{quadtall.JPG}
+\end{center}
+
+
+\newpage
+
+\vspace*{-1cm}
+
+## Online Courses
+
+The availability and price of the online courses will vary. Some courses are free for a trial period, some are free forever but require payment for an official certificate of completion (after successfully completing required projects, of course), while others require payment with no certificate option. I \textit{think} this may even vary within the different platforms: [Datacamp](https://www.datacamp.com/), [Coursera](https://www.coursera.org/), [edX](https://www.edx.org/), [Codeacademy](https://www.codecademy.com/), etc. Below I will mention those courses that people have mentioned to me as useful. \textbf{This is by no means an exhaustive list.} It may be a wonderful resource even if it's not mentioned below.
+
+Roger Peng's [R Programming Coursera](https://www.coursera.org/learn/r-programming) is a good option for learning R online in a class-like environment, and there are [multiple Coursera R course offerings](https://www.coursera.org/search?query=R&). [Charlotte Wickham](https://www.cwick.co.nz/), Hadley's sister, is a professor at Oregon State and also contributes to many of the [Codeacademy R courses](https://www.codecademy.com/catalog/language/r). The edX [R Data Science: The Basics](https://www.edx.org/course/data-science-r-basics) course with [accompanying book](https://rafalab.github.io/dsbook/) also comes recommended. Several people recommended the [Harvard CS50 Course](https://online-learning.harvard.edu/course/cs50-introduction-computer-science). The Harvard CS50 course is not R specific, but instead is a general survey of programming / programming theory, which can be valuable knowledge when starting your programming career.
+
+If you venture out into the world of online R courses, please do send me your thoughts (positive or negative) on the course you tried so I can share this information with others.
+
+\begin{center}
+\includegraphics[height=1.5in]{rbloggers.png}
+\end{center}
+
+## Websites / Blogs
+
+[r-bloggers](https://www.r-bloggers.com/) is a blog aggregator of content contributed by bloggers who write about R, and you can sign up for a daily newsletter in the upper-right hand corner of the blog. \textbf{I highly recommend signing up for that newsletter.} What I like about r-bloggers is that it hosts a wide variety of content for a very large audience. It has everything from beginner tips to extremely esoteric analyses to silly/fun/humorous content. The daily newletter has a table of contents at the top and an excerpt from each entry lower on the page. It takes only a few seconds to check out the table of contents, and only a few minutes to scan the newsletter if you skip irrelevant / uninteresting posts.
+
+Whenever you run into a problem with R where the solution isn't obvious in an R book/course, just search for what you want to know in Google: ["how to find leverage statistics"](https://stackoverflow.com/questions/9476475/how-to-produce-leverage-stats); ["Pass a data.frame column name to a function"](https://stackoverflow.com/questions/2641653/pass-a-data-frame-column-name-to-a-function); or ["What does XXX error mean?"](https://stackoverflow.com/questions/17738087/time-difference-in-r-posixct-error). There are a number of forums where people have probably posted a similar question to yours and you can get some help. Admittedly it can take a bit of trial and error to figure out what the right search terms might be, but with enough persistence you will most likely find a solution.
+
+
+\newpage
+
+\vspace*{-1cm}
+
+# R Packages
+
+As mentioned on the second page, R is the statistical programming powerhouse that it is because of the numerous packages that have been developed that significantly extend the functionality of R. (To be fair, much of the same can be said for Python.) This includes all facets important to data science: infrastructure, data storage, data wrangling, data analysis, graphics, publishing, reporting, custom applications, and much, much, much more.
+
+In order to a package to be an "official" R package, it needs to meet certain requirements set by R, including compatibility capabilities and responding to issues brought about by the R community. However, it is important to note that these standards \textbf{do not include ensuring that a package does what it purports to do.} This is especially important when using a package that is innovative or allows for the use of a new statistical model. 
+
+R packages are hosted on the [CRAN contributed packages page](https://cran.r-project.org/web/packages/). If you navigate to the page where [packages are listed by name](https://cran.r-project.org/web/packages/), you will see that searching by package names can make it difficult to locate the packages that are most relevant to your task. The [TASK VIEWS](https://cran.r-project.org/web/views/) groups together packages by topic type, although being classified in one of these task views depends on the developer indicating this information when the package is submitted. Thus, the number of packages that truly fall under each topic are more than what are listed on each of the individual pages. 
+
+When you install the base R program, it comes with a handful of packages that can be used to accomplish the most basic data science needs. While can do a lot with the base R package, this doesn't mean that the syntax to accomplish your goals is easy or intuitive, nor will the results of your syntax be in a form that is amenable to being saved and properly stored. Fortunately RStudio has developed a suite of packages that significantly improve these basic capabilities. These are packaged together as [`tidyverse`](https://www.tidyverse.org/packages/) and include the [`ggplot2`](https://ggplot2.tidyverse.org/), [`dplyr`](https://dplyr.tidyverse.org/), [`tidyr`](https://tidyr.tidyverse.org/), [`readr`](https://readr.tidyverse.org/), [`purrr`](https://purrr.tidyverse.org/), [`tibble`](https://tibble.tidyverse.org/), [`stringr`](https://stringr.tidyverse.org/), and [`forcats`](https://forcats.tidyverse.org/) packages.
+
+Other packages of note are [Rmarkdown](https://rmarkdown.rstudio.com/) and [Shiny](https://shiny.rstudio.com/). Each of these packages warrants a few minutes of your attention and will likely be featured in an upcoming newsletter. Rmarkdown was even used to create this newsletter!
+
+# Featured R packages
+
+Each newsletter will feature \textit{at least} one R package. I hope to use this space to showcase the flexibility and adaptability of R for a wide variety of tasks. This is one place where I hope I can convince you all to make a contribution to the newsletter. Although we are all at the same organization, our uses and needs of R will significantly differ. My contributions will be about statistical analyses, data wrangling, graphics, and custom applications, and not all of this information will be relevant to all users across NBME.
+
+\newpage
+\vspace*{-1cm}
+
+## R package: `tableone`
+
+\textbf{tableone} [pdf](https://cran.r-project.org/web/packages/tableone/tableone.pdf) [vignette](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) \newline
+\textit{A great package to easily calculate descriptive statistics.} \newline
+Suggested audience: PADA, CAA, TD; anyone in need of descriptive statistics.
+
+\noindent\rule{8cm}{0.2pt}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[height=4in]{tableone.jpg}
+\caption{One possible output from the tableone package.}
+\end{figure}
+
+\vspace{-.25cm}
+
+\noindent\rule{8cm}{0.2pt}
+
+Most of the time when you are starting an analysis it is important to view the basic descriptive statistics of your sample and key variables. Not only does this help you become more familiar with your sample, but can also forecast potential results or difficulties with analyses (e.g. hints of extreme skew or kurtosis). However, when you need to get the descriptive statistics for many variables, writing the syntax to get this information can be a bit tedious. Or, even when you only have a few variables, it can take some work to get these results into a form that is publication-worthy. The `tableone` package was made to make this process easier. You can explicitly declare what variables you want in the table, you can choose what descriptives are output, and you can even include simple analyses of differences when you're reporting statistics for groups (as has been done above). `tableone` isn't perfect - sometimes the resulting output still needs some grooming prior to publication - but I highly recommend it as part of your normal workflow for any analysis.
+
+
+\newpage
+\vspace*{-1cm}
+
+## R package: `wesanderson`
+
+\textbf{wesanderson} [pdf](https://cran.r-project.org/web/packages/wesanderson/wesanderson.pdf) [vignette](https://github.com/karthik/wesanderson) \newline
+\textit{Apply color schemes from Wes Anderson movies to your graphs.} \newline
+Suggested audience: PADA, CAA, TD; anyone interested in graphing
+
+\noindent\rule{8cm}{0.2pt}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[height=4in]{wesanderson.jpg}
+\caption{Example palettes from the wesanderson package}
+\end{figure}
+
+\vspace{-.25cm}
+\noindent\rule{8cm}{0.2pt}
+
+
+I am a huge fan of Wes Anderson movies. I love the universes that he creates for his stories, down to the scenery, costumes, and color palettes. You can bet I was excited to hear that someone had made an R package that allows you to apply these color schemes to your own graphs. Amazing, right?! Well, not really. The first inconvenience is that the palattes can sometimes only be used when you have the right amount of levels for a variable (usually 4 or 5). Even then I didn't think the palettes lent themselves to visualization best practices, and I often abandoned them in favor of better contrasts or gradients. This isn't to say that I don't \textit{ever} use these colors - I've snuck them into a few conference presentations and internal reports - but in general I found I liked the idea of the package better than its actual function.
+
+
+\vspace{.25cm}
+\hrule
+\vspace{.25cm}
+\textbf{Want to contribute an R package review?} There are two ways that you can do so:
+\vspace{-.25cm}
+\begin{itemize}
+\item You can click \href{https://forms.gle/FCUzJ8fnRjwvEfSCA}{this link} to go to a Google form that asks for all of the necessary information.
+\item You can \href{mailto:CRunyon@nbme.org}{email me at CRunyon@nbme.org} with the necessary information, using the informaiton above as a template. The image is optional - send one if you have it, or I can easily make one.
+\end{itemize}
+
+\newpage
+
+\vspace*{-1cm}
+
+\sectionfont{\centering \emph}
+# Data Science Oath^[Taken from [Data Science for Undergraduates: Opportunities and Options](https://www.ncbi.nlm.nih.gov/books/NBK532768/pdf/Bookshelf_NBK532768.pdf)]
+
+I swear to fulfill, to the best of my ability and judgment, this covenant:
+\newline
+\newline
+I will respect the hard-won scientific gains of those data scientists in whose steps I walk and gladly share such knowledge as is mine with those who follow.
+\newline
+\newline
+I will apply, for the benefit of society, all measures which are required, avoiding misrepresentations of data and analysis results.
+\newline
+\newline
+I will remember that there is art to data science as well as science and that consistency, candor, and compassion should outweigh the algorithm's precision or the interventionist's influence.
+\newline
+\newline
+I will not be ashamed to say, “I know not,” nor will I fail to call in my colleagues when the skills of another are needed for solving a problem.
+\newline
+\newline
+I will respect the privacy of my data subjects, for their data are not disclosed to me that the world may know, so I will tread with care in matters of privacy and security. If it is given to me to do good with my analyses, all thanks. But it may also be within my power to do harm, and this responsibility must be faced with humbleness and awareness of my own limitations.
+\newline
+\newline
+I will remember that my data are not just numbers without meaning or context, but represent real people and situations, and that my work may lead to unintended societal consequences, such as inequality, poverty, and disparities due to algorithmic bias. My responsibility must consider potential consequences of my extraction of meaning from data and ensure my analyses help make better decisions.
+\newline
+\newline
+I will perform personalization where appropriate, but I will always look for a path to fair treatment and nondiscrimination.
+\newline
+\newline
+I will remember that I remain a member of society, with special obligations to all my fellow human beings, those who need help and those who don't.
+\newline
+\newline
+If I do not violate this oath, may I enjoy vitality and virtuosity, respected for my contributions and remembered for my leadership thereafter. May I always act to preserve the finest traditions of my calling and may I long experience the joy of helping those who can benefit from my work.
+\newline
+
+\hrule
+
+\begin{center}
+\textbf{THANK YOU!}
+\end{center}
+\vspace{-.25cm}
+Thank you for reading this far! I hope that you have found this newsletter useful. Without your interest and contributions, we couldn't be a group. Future newsletters will not be this long. Or, if they are, it's because there is content will be predictably long and can be consumed only if desired (e.g. multiple R package reviews). Happy coding!
