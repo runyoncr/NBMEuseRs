@@ -114,7 +114,7 @@ Suggested audience: Anyone who needs to read in data from other statistical prog
 
 \vspace{.5cm}
 
-Of these two packages, I tend to use `haven` more often because (1) I'm most often reading in SPSS or SAS files; (2) I like the different `zap_` functions that are available; and (3) \textbf{`haven` can read in the sas .sas7bdat files without having SAS installed (foreign requires a SAS installation on your system)}. When reading in an SPSS file, R takes care to ensure that all of the file metadata is preserved. Take the image below for example. 
+Of these two packages, I tend to use `haven` more often because (1) I'm most often reading in SPSS or SAS files; (2) I like the different `zap_` functions that are available; and (3) \textbf{haven can read in the sas .sas7bdat files without having SAS installed (foreign requires a SAS installation on your system)}. When reading in an SPSS file, R takes care to ensure that all of the file metadata is preserved. Take the image below for example. 
 
 \vspace{.25cm}
 \begin{center}
@@ -153,7 +153,7 @@ While `haven` is now considered the standard for importing SPSS / SAS files, `fo
 
 Using the [`rbenchmark`](https://cran.r-project.org/web/packages/rbenchmark/rbenchmark.pdf) package, I will now compare the speeds of the `haven` and `foreign` packages to import SPSS data files. This process is replicated 100 times and the reported times are the sum of these replications. 
 
-Two files are used in this demonstration. The first file is a \textbf{large} (48.1 MB) public-use data file downloaded from the [National Center for Education Statistics website](https://nces.ed.gov/OnlineCodebook). Specifically, this file is contains data from the National Household Education Survey of 2016. The second file is from a data pull for a recent project, which will probably more closely resemble tasks that we will do at the board (file size = 9.7 MB). For ease of readability, I've saved the file paths to objects named `big_spss_file` and `small_spss_file`.
+Two files are used in this demonstration. The first file is a \textbf{large} (48.1 MB) public-use data file downloaded from the [National Center for Education Statistics website](https://nces.ed.gov/OnlineCodebook). Specifically, this file contains data from the National Household Education Survey of 2016. The second file is from a data pull for a recent project, which will probably more closely resemble tasks that we will do at the board (file size = 9.7 MB). For ease of readability, I've saved the file paths to objects named `big_spss_file` and `small_spss_file`.
 
 ```{r, echo = FALSE, eval = FALSE}
 big_spss_file <- NULL # <hidden>
