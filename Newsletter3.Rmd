@@ -1,0 +1,170 @@
+---
+output: pdf_document
+fontsize: 12pt
+urlcolor: blue
+header-includes:
+ - \usepackage{booktabs}
+ - \usepackage{sectsty}
+ - \usepackage[utf8]{inputenc}
+ - \usepackage[T1]{fontenc}
+ - \usepackage{microtype}
+ - \usepackage{newspaper}
+ - \usepackage{graphicx}
+ - \usepackage{multicol}
+ - \usepackage{picinpar}
+ - \usepackage{hyperref} 
+ - \usepackage{natbib}
+ - \usepackage{threeparttable}
+ - \usepackage{setspace}
+ - \usepackage{lscape}
+ - \usepackage{wrapfig}
+ - \usepackage{rotating}
+ - \usepackage{epstopdf}
+ - \usepackage{subcaption} 
+ - \usepackage{enumitem}
+---
+
+```{=tex}
+\date{February 23, 2021}
+\currentvolume{2}
+\currentissue{1}
+\SetPaperName{NBME us:eRs:}
+\SetHeaderName{NBME useRs}
+\SetPaperLocation{}
+\SetPaperSlogan{``there is art to data science''}
+\SetPaperPrice{PRICELESS}
+```
+\maketitle
+
+\vspace{-1.5cm}
+
+```{=tex}
+\sectionfont{\centering}
+\vspace*{1em}
+```
+# Happy 2021!
+
+Welcome back! I hope you all had some enjoyable time off and are having a great start to the new year - especially now that we're almost two months in! One of my goals for the year is to publish at least 6 issues of the NBME useRs newsletter. \textbf{I won't be able to make this goal without your help}, so please continue to \href{mailto:CRunyon@nbme.org}{send me} ideas about things that you want to learn and know about R. For this issue I'm going to discuss connecting R to ODBC, as well as random things of interest I learned over the last couple of months at an R workshop and conference.
+
+\vspace*{-.25cm}
+
+# Using R with Open Database Connectivity (ODBC)[^1]
+[^1]: Thanks to Laurel Smith for the idea to cover this topic!
+
+\begin{figure}[h!]
+\centering
+\href{https://db.rstudio.com/}{\includegraphics[height=3in]{dbrstudio.jpg}}
+\caption{\textbf{\href{https://db.rstudio.com/}{Databases using R}}}
+\end{figure}
+
+Since the NBME announced that they will be moving toward using R and Python for operational work, I've started paying more attention to how can R can be deployed at the level of an enterprise and not just at the individual (or team) level. Fortunately the folks at R Studio (and similar organizations) long ago recognized that supporting such work would be beneficial to their business. As such, there are numerous resources online at RStudio and other places that discuss such endeavors, including using R with ODBC and working in different environments.
+
+\newpage
+
+\vspace*{.1cm}
+
+An short list of some related helpful resources:
+
+\begin{itemize}
+
+\item \textbf{\href{https://db.rstudio.com/}{Databases using R}} This is the main landing page for RStudio resources for connecting to databases with R (pictured on the first page). The left-hand side of this page (not pictured) has information on the R Packages that have been developed to facilitate database connections. This is followed by information on \href{https://db.rstudio.com/rstudio/pro-drivers/}{Professional Drivers} that can be used (these are \textit{not} free services), and then a section on best practices when using database connections.
+
+\item \textbf{\href{https://db.rstudio.com/getting-started/connect-to-database/}{Connect to a Database}} This RStudio page is a basic introduction to connecting to a database with R, complete with R package downloads and examples along the way.
+
+\item \textbf{\href{https://db.rstudio.com/odbc/}{Databases}} This page provides a list of database types that can be connected via R. Clicking on the name of the database (Apache Hive, MySQL, SQLite, Salesforce, etc) takes you to an example page of how to establish a connection with that database.
+
+\item \textbf{\href{https://nhsrcommunity.com/blog/sql-server-database-connections-in-r/}{SQL server connections in R}} This is a blog post from NHS-R, a community of R users that work with or analyze data from the National Health Service in England. 
+
+\item \textbf{\href{https://nhsrcommunity.com/learn-r/workshops/database-connections-in-r-webinar/}{Database Connections with R Webinar}} This is a 60-minute webinar that was presented by NHS-R in 2020 that is a nice overview on connecting databases with R. Jump ahead to the 5:30 mark to get to the start of the actual webinar presentation. I am a novice with connecting to databases, and I learned a lot watching this webinar. The materials and scripts that the presenter uses in the webinar are available at \href{https://github.com/nhs-r-community/Webinars/tree/master/Database_connections_in_R}{their github page}.
+
+\end{itemize}
+
+In general, I would encourage you to work with your teammates to help navigate the best setup for your team / use case to use when connecting R to different databases, as I would imagine this will vary across teams at NBME.
+
+# RStudio Table Competition
+
+In late December [RStudio announced the winners of their very first table contest](https://blog.rstudio.com/2020/12/23/winners-of-the-2020-rstudio-table-contest/). Like all RStudio competitions, I'm amazed at the wide variety of ways that people think about using R. Almost every entry has some feature that's inspiring and novel, and makes me think about the ways that I could construct more informative tables.
+
+One table of note is [this `tidyverse` table](http://www.sumsar.net/files/posts/2020-12-29-tidyverse-in-a-table/tidyverse_in_a_table.html) about the different packages and functions that can be accomplished in R by using the `tidyverse` package. The table is interesting both because of its content and the beauty of its construction.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[height=1in]{atable.jpg}
+\caption{A beautiful, but uninformative table.}
+\end{figure}
+
+\newpage
+
+\vspace*{-1cm}
+
+# Featured R packages
+
+## R package: `renv`
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+  \vspace{-60pt}
+  \begin{center}
+    \includegraphics[width=0.3\textwidth]{renvhex.jpg}
+  \end{center}
+  \vspace{-60pt}
+\end{wrapfigure}
+
+\textbf{renv} [pdf](https://cran.r-project.org/web/packages/renv/renv.pdf) [vignette](https://rstudio.github.io/renv/articles/renv.html) \newline \newline
+\textit{R dependency management.} \newline \newline
+Suggested audience: Teams that need to ensure package updates and related software changes don't disrupt normal operational workflows.
+
+\noindent\rule{8cm}{0.2pt}
+
+\vspace{.25cm}
+
+One topic that was often mentioned during conference talks was R package dependency management. As you may know, R packages are often updated by their developers for a variety of reasons, most common of which are extending package functionality and bug fixes (one requirement of having your package hosted on the official CRAN network is promising to fix bugs that are discovered by users). A common problem that can occur when you are using multiple R packages for a project is that when you update your packages, somewhere the packages no longer "talk" to one another and your program no longer functions as intended. And the problem may not be caused by the package you think is causing the problem; many packages have \textit{other} packages on which they depend, and updating the main package also updates the packages on which the main package depends (see below). When programs fail to run in research or other low-stakes situations, it can be annoying and frustrating, especially when the fix isn't quickly evident. When operational work is interrupted by errors caused by package updates, it can be even more problematic. 
+
+\vspace{.1cm}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[height=1in]{aersnip.jpg}
+\caption{Example of package dependencies with the AER package.}
+\end{figure}
+
+\vspace{.1cm}
+
+Fortunately, this problem is not a new problem and there have long existed \textit{dependency management} tools as one possible solution. Such tools help you reproduce the environment where you initially built your program to ensure that package updates don't break the functionality of an important process. The `renv` package is the newest package developed by RStudio to help accomplish this task ([`packrat`](https://rstudio.github.io/packrat/) was the previous package developed for this purpose). By integrating `renv` into your programming, you can have more confidence that your program will consistently work as intended over time, as well as on other machines! I highly recommend looking at the [Introduction to renv](https://rstudio.github.io/renv/articles/renv.html) page to learn more.
+
+For those interested in more information about R environments, namespaces, exports, imports, etc., I found [this blog post](http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/) to be very informative and well worth the time to read.
+
+\newpage
+
+\vspace*{-1cm}
+
+# Conference Highlights
+
+I was fortunate enough to virtually attend a few conferences in January and February. What I enjoy about virtual conferences: (1) they're (mostly) free; (2) because they're free, I don't feel bad if I can only make 1 or 2 talks because of my schedule and other work demands; and (3) most conferences have been posting the talks online afterward. Here are a few of the talks that I thought to be most helpful and/or interesting. 
+
+## ESMAR (Evidence Synthesis & Meta-Analysis in R)
+
+[Workshop: R functions and packages](https://www.youtube.com/watch?v=h5-gbq2-NJg&t=1253s&ab_channel=ESMARConf2021) 
+
+This workshop talks about R functions and packages differently than other presentations I've seen on the same topic. Diagramming the work flow of functions and packages was new to me, and seems to have some utility. All of the other ESMAR talks can be found on [this YouTube page](https://www.youtube.com/channel/UCqoKd8CCBInvyDMqeqGs0YQ/videos). Topics for other talks include automation of tasks (such as text analysis), data visualization, an introduction to Github, etc.
+
+## restudio::global 2021
+
+$\rhd$  [Maintaining the house that tidyverse built](https://rstudio.com/resources/rstudioglobal-2021/maintaining-the-house-the-tidyverse-built/)
+
+This is a talk on code maintenance by Hadley Wickham, the Chief Scientist at RStudio and someone whom I admire greatly. Admittedly the topic isn't "sexy" (by Hadley's own admission), but I always enjoy hearing Hadley talk about anything. The logic and clarity in his thought is remarkable, and this shows up in the design of his packages and in the elegance of his coding. If you haven't ever heard Hadley give a talk, are curious, and have 30 minutes to spare, I'd suggest checking it out. [Here is a YouTube playlist of some of Hadley's talks.](https://www.youtube.com/playlist?list=PL9HYL-VRX0oThZQpA9P-82PUY7xUGHOgt)
+
+$\rhd$ [The rest of the rstudio::global 2021 talks can be found here](https://rstudio.com/resources/rstudioglobal-2021/)
+
+The rest[^2] of the rstudio::global 2021 talks short (5-20 minutes) and cover a large breadth of topics. RStudio has categorized the talks into the following broad categories: Data for Good, Language Interop (R talking to other languages, such as Python and SQL), Learning, Modeling, Organizational Tooling, Package Development, Programming, Teaching, and Visualization. \textbf{If anyone sees a talk that they particularly like and think others would find interesting, please let me know!}
+
+[^2]: Those talks that are \textit{not} Keynote talks.
+
+# Google Fonts
+
+This last bit of information isn't related to R, but is too cool not to share. I've always found fonts to be pretty interesting (check out the [Helvetica documentary](https://www.rottentomatoes.com/m/helvetica)), but haven't recently taken the time to look for free fonts online that might be useful for documents / projects. Over the holiday season I learned about [Google fonts](https://fonts.google.com/), an incredible collection of beautiful fonts that are freely available to download and install. Go and explore and find your favorite (free!) new font!
+
+
+
+
+
+
