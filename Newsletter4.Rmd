@@ -1,0 +1,187 @@
+---
+output: pdf_document
+fontsize: 12pt
+urlcolor: blue
+header-includes:
+ - \usepackage{booktabs}
+ - \usepackage{sectsty}
+ - \usepackage[utf8]{inputenc}
+ - \usepackage[T1]{fontenc}
+ - \usepackage{microtype}
+ - \usepackage{newspaper}
+ - \usepackage{graphicx}
+ - \usepackage{multicol}
+ - \usepackage{picinpar}
+ - \usepackage{hyperref} 
+ - \usepackage{natbib}
+ - \usepackage{threeparttable}
+ - \usepackage{setspace}
+ - \usepackage{lscape}
+ - \usepackage{wrapfig}
+ - \usepackage{rotating}
+ - \usepackage{epstopdf}
+ - \usepackage{subcaption} 
+ - \usepackage{enumitem}
+---
+
+```{=tex}
+\date{June 29, 2021}
+\currentvolume{2}
+\currentissue{2}
+\SetPaperName{NBME us:eRs:}
+\SetHeaderName{NBME useRs}
+\SetPaperLocation{}
+\SetPaperSlogan{``there is art to data science''}
+\SetPaperPrice{PRICELESS}
+```
+\maketitle
+
+\vspace{-.5cm}
+
+Good morning friendly NBME useRs! I hope this newsletter finds you well. I did not anticipate delaying the second installment of the 2021 useRs newsletter until almost the beginning of Q3, but here we are. Subsequent issues should be published more regularly.
+
+```{=tex}
+\sectionfont{\centering}
+```
+
+\vspace{-.5cm}
+\section{R Shiny}
+
+For this newsletter I'm going to showcase the [Shiny](https://shiny.rstudio.com/) package by R Studio. \textbf{If you're not familiar with Shiny, I encourage you to take a look at} [this RStudio gallery](https://shiny.rstudio.com/gallery/) \textbf{of example Shiny apps to get a sense of what this newsletter will talk about.} I'm focusing only on the Shiny package for this newsletter for 2 reasons:
+
+\begin{enumerate}
+\item Shiny is a fantastic package that allows you to build your own interactive web applications in R. These "web applications" can take on many forms - traditional interactive websites that are publicly available and can be found via a hyperlink, or internally hosted applications for a variety of tasks, such as score reporting, item review, automatic item generation, or automated report generation. Importantly, using Shiny \textit{does not require that the end user know any R syntax.}
+\item I was part of a team that recently offered an 8-hour workshop on using Shiny (this was at the recent \href{https://higherlogicdownload.s3.amazonaws.com/NCME/c53581e4-9882-4137-987b-4475f6cb502a/UploadedImages/2021__Annual_Meeting/NCME_2021_FINAL_Print_Program_May_26_2021.pdf}{NCME conference}). I'm going to leverage that work to get another newsletter in your hands. 
+\end{enumerate}
+
+This newsletter is going to be fairly short - I'm going to hit the highlights of Shiny, but [all of the materials from our workshop are freely available online through my Github](https://github.com/runyoncr/ShinyWorkshop_NCME2021) so you can download the slides and other materials from the workshop there.
+
+\subsection{Background}
+
+\begin{quote}
+"Shiny is an R package that makes it easy to build interactive web apps straight from R. You can host standalone apps on a webpage or embed them in \href{https://rmarkdown.rstudio.com/}{R Markdown documents} or build \href{http://rstudio.github.io/shinydashboard/}{dashboards}. You can also extend your Shiny apps with \href{http://rstudio.github.io/shinythemes/}{CSS themes}, \href{http://www.htmlwidgets.org/}{htmlwidgets}, and \href{https://shiny.rstudio.com/articles/packaging-javascript.html}{JavaScript actions}."
+\end{quote}
+
+As this quote from the [R Studio Shiny page](https://shiny.rstudio.com/) indicates, Shiny is really a set of R functions that make it easy to utilize html and JavaScript to create interactive applications. The R functions are essentially [wrapper functions](https://en.wikipedia.org/wiki/Wrapper_function) that translate R syntax into html or JavaScript syntax, so it is not necessary that you know html or JavaScript to make a Shiny app. You'll likely learn some very basic html / JavaScript while building your first app, and if you have some fluency with these languages you can further customize your application beyond the options offered by the R packages.
+
+\newpage
+\vspace*{-.5cm}
+\subsection{UI and Server}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{uiserver2.png}
+  \end{center}
+  \vspace{-20pt}
+\end{wrapfigure}
+
+So how does it all work? The two main components of any Shiny application are the \textbf{UI} (\underline{U}ser \underline{I}nterface) and the \textbf{server}. The UI is the visual component of the Shiny app that is seen by the user. As a Shiny developer, this is where you decide what types of input to offer the user and how to display the resulting information back to the user. The server is a set of functions that operates on the information provided by the user and returns the result of the functions back to the user. Using this [Movie Explorer Shiny App](https://shiny.rstudio.com/gallery/movie-explorer.html) as an example, the UI consists of the movie search parameters and the graph that results from selected search parameters. Behind the scenes the server refines what is shown in the graph based on the search parameters. 
+
+A common metaphor for understanding the UI / server interaction is that of carrier pigeons. The initial state of the UI is carried to the user, the user chooses some information from that initial state and sends that information to the server, and then the server changes it output and sends the pigeon back to the user.
+
+\subsection{R Shiny at NBME}
+
+I am by no means the Shiny expert at NBME - there are many people in many departments that have better Shiny skills than I do. One place where NBME is making use of the Shiny dashboards is through their score reporting. Francis O'Donnell, Thai Ong, and Rich Feinberg (all PADA) presented their line of research for incorporating score report best practices into Shiny dashboards at the recent NCME conference. This work will enhance what information an examinee sees and also help examinees best interpret that information. 
+
+My first opportunity to build a Shiny app came when I was an intern for Irina Grabovsky a handful of years ago. As you all may know, Irina is an author for a unique empirical standard setting app called the Cut-Score Operating Function ([Grabovsky & Wainer, 2017a](https://journals.sagepub.com/doi/full/10.3102/1076998617696495), [Grabovsky & Wainer, 2017b](https://journals.sagepub.com/doi/full/10.3102/1076998617701134)), so my work with Irina was building an online application so the function could be used in standard settings and other research. This work was continued by Jesse Pace the year after I was an intern, and you can see the current version of that app at [https://cutscore.shinyapps.io/CutScore/](https://cutscore.shinyapps.io/CutScore/).
+
+\vspace{.5cm}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[height=1in]{shinyBanner.png}
+\end{figure}
+
+\newpage
+\vspace*{-.5cm}
+\subsection{Shiny Books}
+
+\begin{centering}
+\hfill
+\href{https://mastering-shiny.org/}{\includegraphics[width=.35\textwidth, height = 2in]{MasteringShiny.png}}\hfill
+\href{https://engineering-shiny.org/}{\includegraphics[width=.35\textwidth, height = 2in]{EngineeringShiny2.png}}\hfill
+\href{https://unleash-shiny.rinterface.com/index.html}{\includegraphics[width=.25\textwidth, height = 2in]{OutstandingInterfaces.png}}
+
+\end{centering}
+
+
+\vspace{.5cm}
+
+\href{https://mastering-shiny.org/}{\textbf{Mastering Shiny by Hadley Wickham.}} I find this text clear, easy to follow, and interesting to read (in traditional Hadley Wickham fashion). Some of the activities and guidance provided in the NCME 2021 Shiny workshop were taken or inspired by parts of this book. It is highly recommended for Shiny users who want a firmer grasp on the basics (and some intermediate skills too). You can access the online bookdown version of the text by clicking the image or text name at the beginning of this paragraph, and you can soon \href{https://www.oreilly.com/library/view/mastering-shiny/9781492047377/}{order a print version of book from O'Reilly.}
+
+\vspace{.5cm}
+
+\href{https://engineering-shiny.org/}{\textbf{Engineering Production-Grade Shiny Apps by Colin Fay, S\'ebastien Rochette, Vincent Guyader, and Cervan Girard.}} This book is designed to help users "confidently work with `shiny` once you know the basics, and before you send [your app] to production." That is, the authors identified a gap in the literature between learning `shiny` basic and production-level `shiny` best practices. In this book the link between Shiny and CSS/JavaScript is discussed. The authors identify two groups that are the intended audience for the book:
+
+\begin{itemize}
+\item Team managers who want to help organizing work, and `shiny` developers who want to learn about project management.
+\item Developers who want to cover medium to advanced `shiny` topics that will be relevant to production.
+\end{itemize}
+
+\vspace{.5cm}
+
+\href{https://unleash-shiny.rinterface.com/index.html}{\textbf{Outstanding User Interfaces with Shiny by David Granjon.}} This book presents information on customizing the user interface (UI) portion of the shiny app - what the user / client sees when they are interacting with your `shiny` app. The author considers this book to be a good companion book to "Engineering Production-Grade Shiny Apps" because it offers guidance on fully customizing the UI, as may usually be necessary for some clients. The book discusses the link between `shiny` and HTML, CCS, and JavaScript. (The author suggests \href{https://engineering-shiny.org/}{John Coene's Javascript for R} book as an additional supplement to his work.)
+
+
+\newpage
+\vspace*{-.5cm}
+\subsection{R Studio Shiny Resources}
+
+One of the best and most comprehensive places to learn more about `Shiny` is from R Studio; [https://shiny.rstudio.com/tutorial/](https://shiny.rstudio.com/tutorial/). The complete tutorial video is 2 hours and 25 minutes long, but there is an chapter list so you can jump directly to learning about a specific topic.
+
+The RStudio also offers a [Interactive Web Apps with shiny Cheat Sheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) that we recommend.
+
+There are also links to 5 additional talks on the R Studio `Shiny` Tutorial page that come highly recommended:
+\begin{itemize}
+\item \href{https://www.rstudio.com/resources/shiny-dev-con/reactivity-pt-1-joe-cheng/}{Effective Reactive Programming Part 1} 
+\item \href{https://www.rstudio.com/resources/shiny-dev-con/reactivity-pt-2/}{Effective Reactive Programming Part 2} 
+\item \href{https://www.rstudio.com/resources/webinars/interactive-graphics-with-shiny/}{Interactive Graphics with Shiny} 
+\item \href{https://www.rstudio.com/resources/shiny-dev-con/modules/}{How to use Shiny Modules} 
+\item \href{https://www.rstudio.com/resources/shiny-dev-con/debugging-techniques/}{Debugging techniques} 
+\end{itemize}
+
+There are also short written lessons available on the main page, allowing you to go at your own pace and copy-paste code to help you learn. Do note that there are also [several additional articles aimed at helping intermediate `Shiny` users continue to improve](https://shiny.rstudio.com/articles/).
+
+\subsection{Other Shiny Video Tutorials}
+
+There is a coursera course on [Developing Data Products](https://www.coursera.org/learn/data-products) that might be of interest. `Shiny` is only a small part of that course, but the course also covers related topics such as Plotly, R Markdown, and creating R Packages. I'm not familiar with the main instructor of the course, [Brian Caffo](https://www.jhsph.edu/faculty/directory/profile/1010/brian-s-caffo) , but I'm familiar with and really like the work / teachings of one of the co-instructors, [Roger Peng](http://www.biostat.jhsph.edu/~rpeng/).
+
+Mike Garcia's [R in Pharma: Intro to Shiny](https://www.youtube.com/watch?v=eoeLn8SyDW8&ab_channel=RStudio) seems to be another nice introduction to `Shiny`. It is posted by the official [RStudio YouTube account](https://www.youtube.com/channel/UC3xfbCMLCw1Hh4dWop3XtHg); we recommend giving that account a follow. 
+
+\subsection{Golem}
+
+[Golem](https://golemverse.org/) is an "opinionated framework for building production-grade shiny applications," and it [has its own Cheat Sheet as well](https://thinkr.fr/golem_cheatsheet_v0.1.pdf). Golem is a framework for creating production-grade shiny apps, such that the instructions / steps in building your app have some of the best practices / large-scale app deployment considerations baked in; you don't make a shiny app and then retroactively figure out how to make the necessary improvements to get it to production-grade. The [Engineering Production-Grade Shiny Apps](https://engineering-shiny.org/) book we mention above has an [entire chapter dedicated to Golem](https://engineering-shiny.org/golem.html). The [golem github page](https://github.com/ThinkR-open/golem) has extensive resources for those interested in learning more.
+
+\newpage
+\vspace*{-.5cm}
+\subsection{Aggregated Shiny Package Lists}
+
+There are some \textit{fantastic} curated lists of `Shiny` resources that are really helpful for app development. 
+
+\vspace{1em}
+
+[Awesome Shiny Extensions](https://github.com/nanxstats/awesome-shiny-extensions) by [Nan Xiao](https://github.com/nanxstats) is one of the most helpful and comprehensive lists of R packages that significantly extend the functionality of `Shiny`. The list is broken down into major aspects of `Shiny`: Theming, UI Components, Visualization, Backend, Deploy, Developer Tools, and Miscellaneous. And each of \textit{those} broad categories have several sub-categories (e.g., Theming - Generic Theming, Dashboard Theming, Mobile Theming, and Theme Customization). And each of \textit{those} sub-categories have several recommended R packages listed (e.g., Generic Theming - shinythemes, shiny.semantic, shinymaterial, shinyUIkit, fullpage, shinybulma, shinyMetroUI, and yonder). We will be covering some of the packages on the Awesome Shiny Extensions list on Day 2, and encourage you take your own deep dive once you become more familiar with `Shiny`.
+
+\vspace{1em}
+
+[Awesome Shiny](https://github.com/grabear/awesome-rshiny) by [Rob Gilmore](https://github.com/grabear) is a very useful curated list of resources for learning all aspects of Shiny - much more than we provide here. The extensive topic list includes general resources, learning materials, people, books, galleries, app examples - and more! \textbf{We strongly encourage you to check out this list of resources to continue you `Shiny` learning journey.} We would love to have the time to cover all of these great resources, but there's no way it's possible given the time constraints of the workshop. 
+
+\vspace{1em}
+
+[Awesome React Components](https://github.com/brillout/awesome-react-components) by [Romuald Brillout](https://github.com/brillout) has a plethora of resources for reactive components, but also contains other useful information (UI utilities, Code Design considerations, ways to improve app performance, etc.).
+
+\vspace{1em}
+
+[Dean Attali](https://github.com/daattali), the creator of the extremely useful [`shinyjs` package](https://deanattali.com/shinyjs/), has a nice list of [advanced Shiny topics](https://github.com/daattali/advanced-shiny).
+
+\vspace{1em}
+
+And, while not specific to `Shiny`, the R Studio group has a nice list of [some of the most useful R packages](https://github.com/rstudio/RStartHere) that follows their data science workflow model.
+
+\vspace{1em}
+
+\begin{center}
+\href{https://github.com/rstudio/RStartHere}{\includegraphics[height=2.5in]{data-science-workflow.png}}
+\end{center}
+
