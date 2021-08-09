@@ -1,0 +1,259 @@
+---
+output: pdf_document
+fontsize: 12pt
+urlcolor: blue
+header-includes:
+ - \usepackage{booktabs}
+ - \usepackage{sectsty}
+ - \usepackage[utf8]{inputenc}
+ - \usepackage[T1]{fontenc}
+ - \usepackage{microtype}
+ - \usepackage{newspaper}
+ - \usepackage{graphicx}
+ - \usepackage{multicol}
+ - \usepackage{picinpar}
+ - \usepackage{hyperref} 
+ - \usepackage{natbib}
+ - \usepackage{threeparttable}
+ - \usepackage{setspace}
+ - \usepackage{lscape}
+ - \usepackage{wrapfig}
+ - \usepackage{rotating}
+ - \usepackage{epstopdf}
+ - \usepackage{subcaption} 
+ - \usepackage{enumitem}
+ - \usepackage{bold-extra}
+---
+
+```{=tex}
+\date{August 9, 2021}
+\currentvolume{2}
+\currentissue{3}
+\SetPaperName{NBME us:eRs:}
+\SetHeaderName{NBME useRs}
+\SetPaperLocation{}
+\SetPaperSlogan{``there is art to data science''}
+\SetPaperPrice{PRICELESS}
+```
+\maketitle
+
+\vspace{-.5cm}
+
+Welcome to the \textsc{special psychometric summer intern edition} of the NBME useRs newsletter! After a short introduction on coding best practices, this newsletter will have R package reviews that were kindly contributed by the summer psychometric interns, as well as package reviews suggested or inspired by their work. The summer interns actually had so many good suggestions for things to cover that I'll have to spread the information over two newsletters. I sincerely appreciate their help, especially given their other working demands. 
+
+```{=tex}
+\sectionfont{\centering}
+```
+
+\vspace{-.5cm}
+
+# Syntax Style Guide
+
+At some level there is no penalty for incidental decisions when programming. Most of the time when you are writing  / reading syntax there is an over-arching goal of achieving some desired outcome, which can be something like estimating some model parameter (item difficulties, individual ability levels, identifying enemy item probabilities), transforming or matching data across different sources, producing a set of weights for an automated scoring model, etc.
+
+Does it matter how you style your syntax? Are there naming and style conventions? As you have probably have guessed, many people believe the answer is yes.
+
+Hadley Wickham developed the [tidyverse style guide](https://style.tidyverse.org/) based on the original Google R style guide, but now the [new Google R style guide](https://google.github.io/styleguide/Rguide.html) is based on Hadley's guide. I recommend reading Hadley's guide when you have the time. It doesn't take long and is definitely worth it. Nonetheless, I've summarized some of the main points below. I didn't realize it at the time, but when I took my first `R` course my instructor made us conform to most of these maxims.
+
+## Naming Objects, Functions, and Variables
+
+The names of most objects and variables should be succinct, descriptive, lowercase, and separated by a hyphen (`-`) or an underscore (`_`); the latter is sometimes called 'snake_case'. The use of periods (`.`) are discouraged because R functionality sometimes implements the period in some of its processes (e.g., when merging data with duplicate variables names but differing values, one will be `var.x` and the other `var.y`), so if you are also using periods it can create some redundancies / unexpected situations. While rare, when it happens it will completely break your code.
+
+The use of camel case naming, where words are smashed together and differentiated by uppercase letters (`likeThis` or `LikeThis`), is discouraged because it encourages long names and doesn't promote succinct descriptive naming. (Admittedly I violate this rule sometimes because `CamelNamesAreFun` to look at.) 
+
+Practically, wouldn't it be helpful to have consistent naming conventions across departments / the organization? This way you would already know the formatting of the examinee ID variable (for example), so there isn't any need for syntax to convert variable names to execute functions or merge data.
+
+\newpage
+
+\begin{center}
+\includegraphics{case_names_renamed2.jpg}
+\end{center}
+
+\newpage
+
+## Functions, "if" family statements
+
+These should be well spaced, include an explicit return call, and have the first curly bracket on the initial line. In addition, `<-` is encouraged as the assignment operator to differentiate it from situations that use `==` to test inequality. While it may seem like overkill to include an explicit return statement, it's computationally cheap and worth the clarity. 
+
+```{r}
+# Good
+simple_function <- function(x, y) {
+  return(x * y)
+}
+
+# Bad (rumored Bill Gates style - parts of it, at least)
+simpleFunction = function(x,y)
+{
+  x*y
+}
+
+```
+
+\vspace{-.5cm}
+
+## Just Don't
+
+Don't make implicit (untested) assumptions that your code will maintain the same type of object, especially when using functions / arguments that may change the type of object you're working with. Below, the top function returns a `logical` (binary) output, whereas the second provides an `integer` output. When both objects are converted to `numeric`, you get different results (second value given after each section of code - `1` and `3` respectively).
+
+```{r}
+x <- c(1, 2, 3)
+
+# Good
+if (length(x) > 0) {
+  print(length(x) > 0)
+  as.numeric(length(x) > 0)
+}
+
+# Bad
+if (length(x)) { # In a limited sense, also checks length(x) > 0
+  print(length(x))
+  as.numeric(length(x))
+}
+
+
+```
+\newpage
+
+## More Style
+
+These are only a few examples and they are specific to the R language. In preparing this newsletter I found many more examples that I thought were interesting, such as the two packages Hadley Wickham recommends for styling - [`styler`](https://styler.r-lib.org/) and [`linter`](https://cran.r-project.org/web/packages/lintr/vignettes/creating_linters.html), interesting blog posts [1](https://www.r-bloggers.com/2018/09/r-code-best-practices/) and [2](https://towardsdatascience.com/best-practices-for-r-programming-ec0754010b5a), and [US Geological Survey Suggestions](https://waterdata.usgs.gov/blog/intro-best-practices/).
+
+\vspace{-.5cm}
+
+# R Package Reviews
+## R package: `igraph`
+\textit{Guest Contributor: \href{mailto:nbei@uw.edu}{Ni Bei}}
+
+\textbf{igraph} [pdf](https://cran.r-project.org/web/packages/igraph/igraph.pdf) [vignette](https://kateto.net/netscix2016.html) \newline
+\textit{A great package to visualize networks, and calculate descriptive network statistics.} \newline
+Suggested audience: Researchers and People Interested in Graphing.
+
+\noindent\rule{8cm}{0.2pt}
+
+\vspace{.25cm}
+
+This package is a staring point for researchers interested in [network analysis](https://en.wikipedia.org/wiki/Social_network_analysis), especially in graphing people interactions and idea/concept transitions. It provides step-by-step instructions on how to format network data, and how to visualize them in multiple ways.
+
+\vspace{.25cm}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.475\textwidth}
+        \centering
+        \includegraphics[width=1.05\textwidth]{igraph_ex1.png} % first figure itself
+        \caption{Some examples of beautiful igraph figures.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.475\textwidth}
+        \centering
+        \includegraphics[width=1.05\textwidth]{igraph_ex2.png} % second figure itself
+        \caption{Some \textit{more} examples of beautiful igraph figures.}
+    \end{minipage}
+\end{figure}
+
+\vspace{2.5cm}
+
+\newpage
+
+## R package: `reticulate`
+\textit{Guest Contributor: \href{mailto:sarac@wisc.edu}{Merve Sarac}}
+
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+  \vspace{-60pt}
+  \begin{center}
+    \includegraphics[width=0.25\textwidth]{reticulate-hex.jpg}
+  \end{center}
+  \vspace{-60pt}
+\end{wrapfigure}
+
+\textbf{reticulate} [pdf](https://cran.r-project.org/web/packages/reticulate/reticulate.pdf) [vignette 1](https://rstudio.github.io/reticulate/) [vignette 2](https://cloud.r-project.org/web/packages/reticulate/index.html)  [vignette 3](https://rviews.rstudio.com/2019/03/18/the-reticulate-package-solves-the-hardest-problem-in-data-science-people/) [vignette 4](https://anderfernandez.com/en/blog/how-to-use-python-in-r/) \newline
+\textit{An efficient package that allows for high-performance interoperability between R and Python.} \newline
+Suggested audience: An R developer that uses Python for some of their work or a data scientist that uses both the R and Python languages.
+
+\noindent\rule{8cm}{0.2pt}
+
+\vspace{.5cm}
+
+The reticulate package offers an extensive set of tools for interoperability between Python and R. The package translates between R and Python objects, calls and/or sources Python scripts, imports Python modules, and integrates Python interactively within R. If you are a user of both powerful languages, the reticulate package significantly simplifies your workflow. It enables data scientists/researchers who speak different languages to collaborate optimally on a project. It may also help a predominant R user comfortably transition from R to Python for some of their work, if interested/needed.
+
+\vspace{-.5cm}
+
+\noindent\rule{8cm}{0.2pt}
+
+As Merve's summary above implies, organizations, teams, or even individual users don't need to pick a singular language to accomplish necessary tasks. Sure, it does help if multiple people on a team all code in the same language because you can work on the same code / proofread each other's work, but in a strict sense it isn't absolutely necessary. The people at R Studio recognized this fact when they started building the ability for R Studio IDE to handle and process \textit{both} R and Python syntax.
+
+The R Studio people recognize the benefit to using both languages, and even see it as supporting R Studio's charter as a [Public Benefits Corporation](https://blog.rstudio.com/2020/01/29/rstudio-pbc/). To that end, R Studio has made (and continues to make) several improvements to the R Studio environment to make it easier to use for Python users (e.g., [1](https://blog.rstudio.com/2020/10/07/rstudio-v1-4-preview-python-support/), [2](https://blog.rstudio.com/2021/06/09/rstudio-v1-4-update-whats-new/)). To learn more about effectively using R and Python together, [I encourage you to read this informative blog posted titled \textit{Debunking the Myths of R vs. Python}](https://blog.rstudio.com/2021/06/15/debunking-the-myths-of-r-vs-python/) and to watch [this webinar called \textit{Building Effective Data Science Teams}](https://www.rstudio.com/resources/webinars/building-effective-data-science-teams/).
+
+\begin{figure}[h!]
+\centering
+\href{https://blog.rstudio.com/2021/06/15/debunking-the-myths-of-r-vs-python/}{\includegraphics[height=2.45in]{serious-data-science.png}}
+\caption{\href{https://blog.rstudio.com/2021/06/15/debunking-the-myths-of-r-vs-python/}{From \textit{Debunking the Myths of R vs. Python}}}
+\end{figure}
+
+\newpage 
+
+## R package: `tm`
+\textit{Guest Contributor: \href{mailto:magdalen.beiting@gmail.com}{Magdalen Beiting-Parrish}}
+
+\textbf{tm} [pdf](https://cran.r-project.org/web/packages/tm/tm.pdf) [vignette 1](https://cran.r-project.org/web/packages/tm/vignettes/tm.pdf) [vignette 2](https://rpubs.com/tsholliger/301914) [vignette 3](https://eight2late.wordpress.com/2015/05/27/a-gentle-introduction-to-text-mining-using-r/) \newline
+\textit{A simple and easy-to-use package for cleaning/processing text for deeper text mining work.} \newline
+Suggested audience: People new to text mining/text pre-processing.
+
+\noindent\rule{8cm}{0.2pt}
+
+\vspace{.25cm}
+
+The tm package is a very simple package that has all of the functionality you need to turn text data into a Document Term Matrix (DTM) or Term Document Matrix (TDM) and also process the data to remove additional whitespace, convert everything to lower case, and reduce all words to their stems. The tm package has a small lexicon of stop words built in, but it also allows you to add in a few additional stop words as a short vector within the command line or even import a file that contains your custom stop words library.   It is good for a novice text miner because it doesn't have too many options or places where things can go wrong. It is very limited; however, and for more advanced text cleaning/pre-processing, the [qdap](https://cran.r-project.org/web/packages/qdap/qdap.pdf) package is certainly better. 
+
+Interested researchers should also consult the Text Mining with R: A Tidy Approach book by [Julia Silge](https://juliasilge.com/) and [David Robinson](http://varianceexplained.org/) that is [freely available online](https://www.tidytextmining.com/), or also available for purchase [from the publisher](https://shop.aer.io/oreilly/p/text-mining-with/9781491981658-9149) or [Amazon](https://www.amazon.com/gp/product/1491981652/ref=as_li_tl?ie=UTF8&tag=juliasilge-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1491981652&linkId=0e92d44b0aa39ab34608ffa582dbd490) if you prefer to work with a physical copy.
+
+\begin{center}
+  \includegraphics{rec_wordcloud.png}
+\end{center}
+Wordcloud of the \href{https://physicianaccountability.org/wp-content/uploads/2021/04/UGRC-Initial-Summary-Report-and-Preliminary-Recommendations-1.pdf}{Preliminary Recommendations of the Undergraduate Medical Education to Graduate Medical
+Education Review Committee} created using the \href{https://cran.r-project.org/web/packages/tm/tm.pdf}{tm}, \href{https://cran.r-project.org/web/packages/textreadr/textreadr.pdf}{textreadr}, \href{https://cran.r-project.org/web/packages/pdftools/pdftools.pdf}{pdftools}, and \href{https://cran.r-project.org/web/packages/wordcloud/wordcloud.pdf}{wordcloud} R packages.
+
+\newpage
+
+
+
+## R package: `ggdist`
+
+\vspace{-.25cm}
+
+\textbf{ggdist} [pdf](https://cran.r-project.org/web/packages/ggdist/ggdist.pdf) [vignette](https://www.r-bloggers.com/2021/07/ggdist-make-a-raincloud-plot-to-visualize-distribution-in-ggplot2/)  \newline
+\textit{A ggplot extension package to enhance density plots.} \newline
+Suggested audience: Anyone looking for a snazzy plot to compare groups on some variable.
+
+\vspace{-.5cm}
+
+\noindent\rule{8cm}{0.2pt}
+
+Makes "raincloud" plots - which consists of stacking a density plot, a boxplot, and then a histogram (with dots instead of bars). Pretty simple, but effective. I haven't completely jumped into everything the package can do - just followed the vignette to learn how to make the plot. 
+
+```{r, eval = FALSE}
+
+library(ggdist); library(ggplot2); set.seed(2872021)
+
+fakedata2 <- data.frame(
+  outcome <- c(rnorm(50, 25, 10), rnorm(50, 50, 10), rnorm(50, 75, 10)),
+  groupz <- c(rep("a", times = 50), rep("b", times = 50), rep("c", times = 50)))
+
+  ggplot(fakedata2, aes(x = factor(groupz), y = outcome, fill = factor(groupz))) + 
+  stat_halfeye(adjust = 0.5, justification = -.2,
+               .width = 0, point_color = NA) +
+  xlab("Group") + ylab("Outcome") + 
+  ggtitle("Demostration of the ggdist R package", 
+          subtitle = "Fake data") +
+  theme(legend.position = "none") +
+  theme(plot.title = element_text(hjust= 0.5)) + 
+  theme(plot.subtitle = element_text(hjust= 0.5)) + 
+  geom_boxplot(width = .12, outlier.color = NA, alpha = 0.5) + 
+  stat_dots(justification = 1.1, side = "left") + coord_flip()
+
+```
+
+\begin{center}
+  \includegraphics{newsletter6_ggist_example.png}
+\end{center}
+
